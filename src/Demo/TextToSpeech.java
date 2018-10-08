@@ -30,15 +30,9 @@ public class TextToSpeech extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jScrollPane1 = new javax.swing.JScrollPane();
-        txt_input = new javax.swing.JTextArea();
         tts_speak = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-
-        txt_input.setColumns(20);
-        txt_input.setRows(5);
-        jScrollPane1.setViewportView(txt_input);
 
         tts_speak.setText("Speack");
         tts_speak.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -57,23 +51,16 @@ public class TextToSpeech extends javax.swing.JFrame {
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(19, 19, 19)
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 359, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(139, 139, 139)
-                        .addComponent(tts_speak, javax.swing.GroupLayout.PREFERRED_SIZE, 88, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(22, Short.MAX_VALUE))
+                .addGap(151, 151, 151)
+                .addComponent(tts_speak, javax.swing.GroupLayout.PREFERRED_SIZE, 88, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(161, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(77, 77, 77)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(30, 30, 30)
+                .addGap(111, 111, 111)
                 .addComponent(tts_speak, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(63, Short.MAX_VALUE))
+                .addContainerGap(155, Short.MAX_VALUE))
         );
 
         pack();
@@ -81,21 +68,22 @@ public class TextToSpeech extends javax.swing.JFrame {
 
     private void tts_speakActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tts_speakActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_tts_speakActionPerformed
-
-    private void tts_speakMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tts_speakMouseReleased
-        // TODO add your handling code here:
-        String Speack = txt_input.getText();
+        String Speack = "hello";
         
         System.setProperty("mbrola.base", "mbrola");
         
         vm = VoiceManager.getInstance();
         
-        v = vm.getVoice("mbrola_us2");
+        v = vm.getVoice("mbrola_us1");
         
         v.allocate();
         
         v.speak(Speack);
+    }//GEN-LAST:event_tts_speakActionPerformed
+
+    private void tts_speakMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tts_speakMouseReleased
+        // TODO add your handling code here:
+        
     }//GEN-LAST:event_tts_speakMouseReleased
 
     /**
@@ -134,8 +122,6 @@ public class TextToSpeech extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JButton tts_speak;
-    private javax.swing.JTextArea txt_input;
     // End of variables declaration//GEN-END:variables
 }

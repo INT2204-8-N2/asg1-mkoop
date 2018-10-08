@@ -1,4 +1,4 @@
-package Dictionary;
+package dictionary;
 
 import java.util.Collections;
 
@@ -11,19 +11,19 @@ public class DataBase {
     String nameFile;
 
     public DataBase() {
-        setData();      
+        setDataBase();      
     }
       
-    private void setData() {
+    private void setDataBase() {
         dic.setPath("E_V.txt");
         dic.readDataFromFile();
     }
     
-    public Dictionary getData() {
+    public Dictionary getDataBase() {
         return dic;
         
     }
-    public void updateData() {
+    public void updateDataBase() {
         Collections.sort(dic.getKey());
         dic.writeData();
     }

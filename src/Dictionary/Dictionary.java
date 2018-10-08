@@ -1,4 +1,4 @@
-package Dictionary;
+package dictionary;
 
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
@@ -8,6 +8,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.Map;
+import java.util.Random;
 import java.util.Scanner;
 import java.util.Set;
 import java.util.TreeMap;
@@ -19,12 +20,12 @@ import java.util.TreeMap;
 public class Dictionary {
 
     private String path;
-    private TreeMap<String, String> data;
+    private TreeMap<String, String> datamap;
     private ArrayList<String> key;
     Scanner sc = new Scanner(System.in);
 
-    public TreeMap<String, String> getData() {
-        return data;
+    public TreeMap<String, String> getMap() {
+        return datamap;
     }
 
     public ArrayList<String> getKey() {
@@ -35,8 +36,8 @@ public class Dictionary {
         this.key = key;
     }
 
-    public void setData(TreeMap<String, String> data) {
-        this.data = data;
+    public void setMap(TreeMap<String, String> data) {
+        this.datamap = datamap;
     }
 
     public void setPath(String path) {
@@ -44,7 +45,7 @@ public class Dictionary {
     }
 
     public Dictionary() {
-        data = new TreeMap<>();
+        datamap = new TreeMap<>();
         key = new ArrayList();
     }
 
@@ -59,7 +60,7 @@ public class Dictionary {
                     String keyWord = target.trim();
                     String meaning = line.substring(index);
 
-                    data.put(keyWord, meaning);
+                    datamap.put(keyWord, meaning);
                     key.add(keyWord);
                 }
             }
@@ -72,7 +73,7 @@ public class Dictionary {
     public void writeData() {
         try (BufferedWriter writefile = new BufferedWriter(new FileWriter(path))) {
             // Lay mot tap hop cac entry
-            Set set = data.entrySet();
+            Set set = datamap.entrySet();
             // Lay mot iterator
             Iterator i = set.iterator();
             // Hien thi cac phan tu
@@ -87,14 +88,22 @@ public class Dictionary {
         }
     }
 
+    /**
+     * tìm kiếm nhị phân
+     * @param word
+     * @param left
+     * @param right
+     * @return 
+     */
     int benarySearch(String word, int left, int right) {
         if (key.get(left).compareTo(key.get(right)) > 0) {
             return -1;
         } else {
             int mid = (left + right) / 2;
-            if (key.get(mid).compareTo(key.get(left)) > 0) {
+            
+            if (key.get(mid).compareTo(word) > 0) {
                 return benarySearch(word, left, mid - 1);
-            } else if (key.get(mid).compareTo(key.get(right)) < 0) {
+            } else if (key.get(mid).compareTo(word) < 0) {
                 return benarySearch(word, mid + 1, right);
             } else {
                 return mid;
@@ -113,27 +122,41 @@ public class Dictionary {
         }
     }
     
+    /**
+     * random to show word in webview
+     * @return 
+     */
+    public String WordRandom() {
+        Random random = new Random();
+        int index = random.nextInt(key.size()-1);
+        return key.get(index);     
+    }
+    
     public void searchWord(String Word) {
-        if(Search(Word).equals("")) System.out.println("this word isn't in dictionary");
-        else System.out.println(data.get(Word));
+        
+        System.out.println(datamap.get(Search(Word)));
     }
 
-    public void removeWord(String word) {
+    public boolean removeWord(String word) {
         if (Search(word).equals("")) {
-            System.out.println("this word isn't in dictionary");
+            return false;
         } else {
-            data.remove(word);
+            key.remove(word);
+            datamap.remove(word);
+            return true;
         }
     }
 
-    public void replaceWord(String Word) {
+    public boolean replaceWord(String Word, String newKey) {
         if (Search(Word).equals("")) {
-            System.out.println("this word isn't in dictionary");
+            return false;
         } else {
-            String meaning = data.get(Word);
-            data.remove(Word);
-            String newKey = sc.nextLine();
-            data.put(newKey, meaning);
+            String meaning = datamap.get(Word);
+            key.remove(Word);
+            datamap.remove(Word);
+            key.add(newKey);
+            datamap.put(newKey, meaning);
+            return true;
         }
     }
 
@@ -143,23 +166,22 @@ public class Dictionary {
         } else {
             System.out.print("nhap nghia: ");
             String explain = "<html>" + sc.nextLine() + "</html>";
-            data.replace(Word, explain);
+            datamap.replace(Word, explain);
         }
     }
 
-    public void addWord() {
-        String newWord = sc.nextLine();
-        if (Search(newWord).equals("")) {
-            System.out.println("this word is exist in dictionary");
+    public boolean addWord(String newWord, String explain) {
+        if (!Search(newWord).equals("")) {
+            return false;
         } else {
-            System.out.print("nhap nghia: ");
-            String explain = "<html>" + sc.nextLine() + "</html>";
-            data.put(newWord, explain);
+            key.add(newWord);
+            datamap.put(newWord, "<html>"+ explain + "</html>");
+            return true;
         }
     }
 
     public void show() {
-        Set set = data.entrySet();
+        Set set = datamap.entrySet();
         // Lay mot iterator
         Iterator i = set.iterator();
         // Hien thi cac phan tu
