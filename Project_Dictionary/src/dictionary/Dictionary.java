@@ -2,9 +2,11 @@ package dictionary;
 
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
-import java.io.FileReader;
+import java.io.File;
+import java.io.FileInputStream;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.Map;
@@ -43,7 +45,8 @@ public class Dictionary {
     }
 
     /**
-     * khi gọi dictionary thì sẽ tạo 1 list để lưu dữ keyword và 1 map để lưu key và nghĩa
+     * khi gọi dictionary thì sẽ tạo 1 list để lưu dữ keyword và 1 map để lưu
+     * key và nghĩa
      */
     public Dictionary() {
         datamap = new TreeMap<>();
@@ -51,36 +54,38 @@ public class Dictionary {
     }
 
     /**
-     * hàm đọc dữ liệu từ file
-     * sử dụng substring để tách phần từ và nghĩa theo cấu trúc của file
+     * hàm đọc dữ liệu từ file sử dụng substring để tách phần từ và nghĩa theo
+     * cấu trúc của file
      */
     public void readDataFromFile() {
-        try (BufferedReader readfile = new BufferedReader(new FileReader(path))) {
-            String line;
-            while ((line = readfile.readLine()) != null) {
-                //indexOf(String) trả về vị trí của chuỗi String trong chuỗi hiện thời. -1 nếu không tồn tại chuỗi 
-                int index = line.indexOf("<html>");
-
-                if (index != -1) {
-                    String target = line.substring(0, index);
-                    String keyWord = target.trim(); // bỏ qua các ký tự khoảng trắng ở đầu và cuỗi chuỗi
-                    String meaning = line.substring(index);
+        try {
+            File file = new File(path);
+            try (BufferedReader readfile = new BufferedReader(new InputStreamReader(new FileInputStream(file), "UTF8"))) {
+                String line;
+                while ((line = readfile.readLine()) != null) {
+                    //indexOf(String) trả về vị trí của chuỗi String trong chuỗi hiện thời. -1 nếu không tồn tại chuỗi
+                    int index = line.indexOf("<html>");
                     
-                    //thêm từ vào treemap
-                    datamap.put(keyWord, meaning);
-                    //thêm từ vào arraylist
-                    key.add(keyWord);
+                    if (index != -1) {
+                        String target = line.substring(0, index);
+                        String keyWord = target.trim(); // bỏ qua các ký tự khoảng trắng ở đầu và cuỗi chuỗi
+                        String meaning = line.substring(index);
+                        
+                        //thêm từ vào treemap
+                        datamap.put(keyWord, meaning);
+                        //thêm từ vào arraylist
+                        key.add(keyWord);
+                    }
                 }
             }
-            readfile.close();
         } catch (IOException e) {
             System.out.println(e);
         }
     }
 
     /**
-     * hàm ghi dữ liệu ra file
-     * duyệt treemap để ghi key và value ra file theo cấu trúc cũ của file
+     * hàm ghi dữ liệu ra file duyệt treemap để ghi key và value ra file theo
+     * cấu trúc cũ của file
      */
     public void writeData() {
         try (BufferedWriter writefile = new BufferedWriter(new FileWriter(path))) {
@@ -90,7 +95,7 @@ public class Dictionary {
             Iterator i = set.iterator();
             // duyệt treemap bằng iterator
             while (i.hasNext()) {
-                Map.Entry me = (Map.Entry) i.next();   
+                Map.Entry me = (Map.Entry) i.next();
                 writefile.write((String) me.getKey());
                 writefile.write((String) me.getValue());
                 writefile.newLine();
@@ -102,6 +107,7 @@ public class Dictionary {
 
     /**
      * tìm kiếm nhị phân dùng trong các hàm tìm kiếm keyWord
+     *
      * @param word
      * @param left
      * @param right
@@ -124,6 +130,7 @@ public class Dictionary {
 
     /**
      * dùng trong các hàm remove, add và replace
+     *
      * @param word
      * @return từ cần tim nếu có không thì null
      */
@@ -137,12 +144,12 @@ public class Dictionary {
             return key.get(index);
         }
     }
-    
+
     /*
     * hàm tìm kiếm từ trực tiếp từ map không thông qua arraylist sử dụng trong search ở controller
     * @param word
     *return 1 chuỗi string là nghĩa hoặc là thông báo không tồn tại
-    */
+     */
     public String SearchInMap(String word) {
         String html = datamap.get(word);
         if (html == null) {
@@ -150,20 +157,21 @@ public class Dictionary {
         }
         return html;
     }
-    
-    
+
     /**
      * random từ để hiển thị trên webview khi run
+     *
      * @return từ random
      */
     public String WordRandom() {
         Random random = new Random();
-        int index = random.nextInt(key.size()-1);
-        return key.get(index);     
+        int index = random.nextInt(key.size() - 1);
+        return key.get(index);
     }
 
     /**
      * xóa từ khỏi file
+     *
      * @param word
      * @return đúng nếu xóa được, sai nếu từ đó không có trong danh sách
      */
@@ -179,6 +187,7 @@ public class Dictionary {
 
     /**
      * hàm thay đổi từ
+     *
      * @param Word
      * @param newKey
      * @return đúng nếu sửa được sai nếu từ đó không có trong từ điển
@@ -195,9 +204,10 @@ public class Dictionary {
             return true;
         }
     }
-    
+
     /**
      * hàm sửa nghĩa của từ
+     *
      * @param Word
      * @param newExplain
      * @return đúng nếu sửa được sai nếu từ đó không có trong từ điển
@@ -206,13 +216,14 @@ public class Dictionary {
         if (Search(Word).equals("")) {
             return false;
         } else {
-           datamap.replace(Word, newExplain);
+            datamap.replace(Word, newExplain);
             return true;
         }
     }
 
     /**
      * hàm này là ghép nghĩa theo đúng cấu trúc của file
+     *
      * @param noun
      * @param verb
      * @param adjective
@@ -220,15 +231,24 @@ public class Dictionary {
      * @return chuỗi string sau khi ghép
      */
     public String setExlain(String noun, String verb, String adjective, String other) {
-            if(!noun.equals("")) noun = "<ul><li><b><i> danh từ</i></b><ul><li><font color='#cc0000'><b>"+ noun +"</b></font></li></ul></li></ul>";
-            if(!verb.equals("")) verb = "<ul><li><b><i> động từ</i></b><ul><li><font color='#cc0000'><b>"+ verb +"</b></font></li></ul></li></ul>";
-            if(!adjective.equals("")) adjective = "<ul><li><b><i> tính từ</i></b><ul><li><font color='#cc0000'><b>"+ adjective +"</b></font><ul></li></ul></ul></li></ul>";
-            if(!other.equals("")) other = "<ul><li><b><i> khác</i></b><ul><li><font color='#cc0000'><b>"+ other +"</b></font></li></ul></li></ul>";
-        return noun+verb+adjective+other;
+        if (!noun.equals("")) {
+            noun = "<ul><li><b><i> danh từ</i></b><ul><li><font color='#cc0000'><b>" + noun + "</b></font></li></ul></li></ul>";
+        }
+        if (!verb.equals("")) {
+            verb = "<ul><li><b><i> động từ</i></b><ul><li><font color='#cc0000'><b>" + verb + "</b></font></li></ul></li></ul>";
+        }
+        if (!adjective.equals("")) {
+            adjective = "<ul><li><b><i> tính từ</i></b><ul><li><font color='#cc0000'><b>" + adjective + "</b></font><ul></li></ul></ul></li></ul>";
+        }
+        if (!other.equals("")) {
+            other = "<ul><li><b><i> khác</i></b><ul><li><font color='#cc0000'><b>" + other + "</b></font></li></ul></li></ul>";
+        }
+        return noun + verb + adjective + other;
     }
 
     /**
      * hàm thêm từ vào list và map
+     *
      * @param newWord
      * @param explain
      * @return đúng nếu thêm được sai nếu từ đó đã tồn tại trong từ điển
@@ -238,7 +258,7 @@ public class Dictionary {
             return false;
         } else {
             key.add(newWord);
-            datamap.put(newWord, "<html>"+ explain + "</html>");
+            datamap.put(newWord, "<html>" + explain + "</html>");
             return true;
         }
     }

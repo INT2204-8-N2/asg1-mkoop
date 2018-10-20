@@ -27,7 +27,7 @@ public class TranslateAPI {
         StringBuilder response = new StringBuilder();
         HttpURLConnection con = (HttpURLConnection) url.openConnection();
         con.setRequestProperty("User-Agent", "Mozilla/5.0");
-        try (BufferedReader in = new BufferedReader(new InputStreamReader(con.getInputStream()))) {
+        try (BufferedReader in = new BufferedReader(new InputStreamReader(con.getInputStream(), "UTF8"))) {
             String inputLine;
             while ((inputLine = in.readLine()) != null) {
                 response.append(inputLine);

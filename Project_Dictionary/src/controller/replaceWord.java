@@ -5,7 +5,7 @@
  */
 package controller;
 
-import Controller.Controller1;
+import frame.Controller1;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;

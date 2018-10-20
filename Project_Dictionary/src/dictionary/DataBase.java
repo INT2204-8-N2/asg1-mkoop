@@ -15,7 +15,7 @@ public class DataBase {
     }
       
     private void setDataBase() {
-        dic.setPath("data/E_V.html");
+        dic.setPath("D:\\Project_Dictionary\\data\\E_V.txt");
         dic.readDataFromFile();
     }
     
