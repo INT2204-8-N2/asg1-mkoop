@@ -17,7 +17,7 @@ import javafx.stage.Stage;
  * @author DUC KHIEM
  */
 public class insertWord implements Initializable {
-    
+
     @FXML
     private TextField addWord;
     @FXML
@@ -29,6 +29,7 @@ public class insertWord implements Initializable {
     @FXML
     private TextField other;
 
+    private static String text;
     private String wordExplain;
 
     @FXML
@@ -36,6 +37,7 @@ public class insertWord implements Initializable {
 
     /**
      * Initializes the controller class.
+     *
      * @param url
      * @param rb
      */
@@ -46,20 +48,25 @@ public class insertWord implements Initializable {
 
     @FXML
     private void Insert(ActionEvent event) {
-        wordExplain = Controller1.getDic().setExlain(noun.getText() , verb.getText() , adjective.getText(), other.getText());
+        text = addWord.getText();
+        wordExplain = Controller1.getDic().setExlain(noun.getText(), verb.getText(), adjective.getText(), other.getText());
         Alert alert1 = new Alert(Alert.AlertType.INFORMATION);
         alert1.setTitle("Insert Word");
-        if( Controller1.getDic().AddWord(addWord.getText(), wordExplain) )
-        {
-            alert1.setContentText("Add success!");
-            Controller1.getData().updateDataBase();
+        if (!text.equals("")) {
+            if (Controller1.getDic().AddWord(text, wordExplain)) {
+                alert1.setContentText("Add success!");
+                Controller1.getData().updateDataBase();
+                Controller1.list.add(text);
+            } else {
+                alert1.setContentText("This Word existed in dictionary!");
+            }
+        } else {
+            alert1.setContentText("Error!");
         }
-        else alert1.setContentText("Add error!");       
         alert1.show();
         ((Stage) anchorPane.getScene().getWindow()).close();
     }
 
-    
     @FXML
     private void Cancel(ActionEvent event) {
         ((Stage) anchorPane.getScene().getWindow()).close();
@@ -67,5 +74,9 @@ public class insertWord implements Initializable {
 
     public String getExplain() {
         return "<html>" + wordExplain + "</html>";
+    }
+
+    public static String getWord() {
+        return text;
     }
 }

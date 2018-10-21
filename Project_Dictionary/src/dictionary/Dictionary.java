@@ -4,9 +4,11 @@ import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.FileOutputStream;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.io.OutputStreamWriter;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.Map;
@@ -88,7 +90,8 @@ public class Dictionary {
      * cấu trúc cũ của file
      */
     public void writeData() {
-        try (BufferedWriter writefile = new BufferedWriter(new FileWriter(path))) {
+        File file = new File(path);
+        try (BufferedWriter writefile = new BufferedWriter( new OutputStreamWriter(new FileOutputStream(file), "UTF8") )) {
             // lấy một tập hợp các ánh xạ entry
             Set set = datamap.entrySet();
             // lấy một iterator

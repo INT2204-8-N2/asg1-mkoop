@@ -12,6 +12,7 @@ import dictionary.DataBase;
 import dictionary.Dictionary;
 import com.sun.speech.freetts.Voice;
 import com.sun.speech.freetts.VoiceManager;
+import controller.insertWord;
 import dictionary.TranslateAPI;
 import java.io.IOException;
 import java.util.Optional;
@@ -49,19 +50,22 @@ public class Controller1 implements Initializable {
         return dic;
     }
 
-    ObservableList <String> list = FXCollections.observableArrayList();
-
-    @FXML
-    private TextField word;
-    @FXML
-    private WebView webview1;
-    private WebEngine webengine1;
+    public static ObservableList<String> list = FXCollections.observableArrayList();
     @FXML
     private ListView<String> listview;
 
+    @FXML
+    private TextField word;
+
+    @FXML
+    private WebView webview1;
+    private WebEngine webengine1;
+
     private String KeyWord;
+
     @FXML
     private TextField textTranslate;
+
     @FXML
     private WebView webview2;
     private WebEngine webengine2;
@@ -88,25 +92,21 @@ public class Controller1 implements Initializable {
     }
 
     /**
-     * hiển thị list từ và nghĩa của từ
-     * hiển thị nghĩa của từ khi tra bằng translate api
+     * hàm chuẩn bị. start
+     *
      * @param location
      * @param resources
-     */   
+     */
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        loadListWord();
-        webengine1 = webview1.getEngine();
+        list.addAll(dic.getKey());
+        listview.setItems(list.sorted());
+        webengine1 = webview1.getEngine(); // trả về 1 đối tượng WebEngine;
         webengine2 = webview2.getEngine();
     }
 
-    private void loadListWord() {
-        list.addAll(dic.getKey());
-        listview.getItems().addAll(list);
-    }
-
     /**
-     * handle a event button cliked on listview
+     * xử lý sự kiện kích chuột trên listView
      *
      * @param event
      */
@@ -118,7 +118,7 @@ public class Controller1 implements Initializable {
     }
 
     /**
-     * used TTS when handle event button click on sound
+     * xử lý sự kiện kích chuột vào button phát âm
      *
      * @param event
      */
@@ -189,6 +189,7 @@ public class Controller1 implements Initializable {
                 alert2.show();
             }
         });
+        list.remove(deleteWord.getText());
     }
 
     /**
@@ -243,8 +244,8 @@ public class Controller1 implements Initializable {
     private void inputWord() throws Exception {
         word.textProperty().addListener((observable, oldValue, newValue) -> {
             int indext = 0;
-            for(String s: dic.getKey()) {
-                if(s.startsWith(newValue)) {
+            for (String s : dic.getKey()) {
+                if (s.startsWith(newValue)) {
                     indext = dic.getKey().indexOf(s);
                     break;
                 }
