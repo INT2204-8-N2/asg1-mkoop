@@ -30,6 +30,9 @@ public abstract class LevelLoader {
 		return _height;
 	}
 
+	public void setLevel(){
+		_level++;
+	}
 	public int getLevel() {
 		return _level;
 	}

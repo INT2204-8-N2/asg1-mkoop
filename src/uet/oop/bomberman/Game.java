@@ -23,7 +23,7 @@ public class Game extends Canvas {
 	
 	public static final String TITLE = "BombermanGame";
 	
-	private static final int BOMBRATE = 1;
+	private static final int BOMBRATE = 2;
 	private static final int BOMBRADIUS = 1;
 	private static final double BOMBERSPEED = 1.0;
 	
@@ -158,10 +158,16 @@ public class Game extends Canvas {
 	public static double getBomberSpeed() {
 		return bomberSpeed;
 	}
+
+	public static void setBomberSpeed(double i){
+		bomberSpeed += 1;
+	}
 	
 	public static int getBombRate() {
 		return bombRate;
 	}
+
+	public static void setBombRate(int i){ bombRate += i;}
 	
 	public static int getBombRadius() {
 		return bombRadius;

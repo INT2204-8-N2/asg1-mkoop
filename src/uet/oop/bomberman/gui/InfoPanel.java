@@ -12,6 +12,7 @@ public class InfoPanel extends JPanel {
 	
 	private JLabel timeLabel;
 	private JLabel pointsLabel;
+	private JLabel levelsLabel;
 
 	public InfoPanel(Game game) {
 		setLayout(new GridLayout());
@@ -23,10 +24,15 @@ public class InfoPanel extends JPanel {
 		pointsLabel = new JLabel("Points: " + game.getBoard().getPoints());
 		pointsLabel.setForeground(Color.white);
 		pointsLabel.setHorizontalAlignment(JLabel.CENTER);
+
+		levelsLabel = new JLabel("Levels: " + game.getBoard().getLevel().getLevel());
+		levelsLabel.setForeground(Color.white);
+		levelsLabel.setHorizontalAlignment(JLabel.CENTER);
 		
 		add(timeLabel);
 		add(pointsLabel);
-		
+		add(levelsLabel);
+
 		setBackground(Color.black);
 		setPreferredSize(new Dimension(0, 40));
 	}
@@ -37,6 +43,10 @@ public class InfoPanel extends JPanel {
 
 	public void setPoints(int t) {
 		pointsLabel.setText("Score: " + t);
+	}
+
+	public void setLevels(int t){
+		levelsLabel.setText("levels: " + t);
 	}
 	
 }

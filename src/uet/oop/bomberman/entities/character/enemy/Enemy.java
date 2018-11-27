@@ -132,7 +132,15 @@ public abstract class Enemy extends Character {
 		// TODO: xử lý va chạm với Flame
 		// TODO: xử lý va chạm với Bomber
 		if(e instanceof Flame) {
-			kill();
+
+
+
+			if(this instanceof khiem){
+				_board.addCharacter( new Balloon(Coordinates.tileToPixel(this._x), Coordinates.tileToPixel(this._y) + Game.TILES_SIZE, _board));
+				_board.addCharacter( new Balloon(Coordinates.tileToPixel(this._x), Coordinates.tileToPixel(this._y) + Game.TILES_SIZE, _board));
+			}
+			else
+				kill();
 			return false;
 		}
 

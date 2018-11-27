@@ -6,13 +6,14 @@ import uet.oop.bomberman.entities.bomb.Bomb;
 import uet.oop.bomberman.entities.bomb.FlameSegment;
 import uet.oop.bomberman.entities.character.Bomber;
 import uet.oop.bomberman.entities.character.Character;
+import uet.oop.bomberman.entities.tile.item.Item;
 import uet.oop.bomberman.exceptions.LoadLevelException;
 import uet.oop.bomberman.graphics.IRender;
 import uet.oop.bomberman.graphics.Screen;
 import uet.oop.bomberman.input.Keyboard;
 import uet.oop.bomberman.level.FileLevelLoader;
 import uet.oop.bomberman.level.LevelLoader;
-
+import uet.oop.bomberman.entities.tile.item.BombItem;
 import java.awt.*;
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -42,7 +43,7 @@ public class Board implements IRender {
 		_input = input;
 		_screen = screen;
 		
-		loadLevel(2); //start in level 1
+		loadLevel(1); //start in level 1
 	}
 	
 	@Override
@@ -82,9 +83,16 @@ public class Board implements IRender {
 		
 	}
 
-	
+
+
+	public void newGame() {
+
+		loadLevel(1);
+	}
+
 	public void nextLevel() {
 		loadLevel(_levelLoader.getLevel() + 1);
+		_levelLoader.setLevel();
 	}
 	
 	public void loadLevel(int level) {
@@ -104,6 +112,17 @@ public class Board implements IRender {
 		} catch (LoadLevelException e) {
 			endGame();
 		}
+	}
+	// kiem tra co an dk item k
+	public boolean isItem(int x, int y, int level) {
+		Item p;
+		for (int i = 0; i < Bomber._upItem.size(); i++) {
+			p = Bomber._upItem.get(i);
+			if(p.getX() == x && p.getY() == y && level == p.getLevel())
+				return true;
+		}
+
+		return false;
 	}
 	
 	protected void detectEndGame() {

@@ -57,12 +57,22 @@ public class Sprite {
 	public static Sprite balloom_left1 = new Sprite(16, 9, 0, SpriteSheet.tiles, 16, 16);
 	public static Sprite balloom_left2 = new Sprite(16, 9, 1, SpriteSheet.tiles, 16, 16);
 	public static Sprite balloom_left3 = new Sprite(16, 9, 2, SpriteSheet.tiles, 16, 16);
-	
+
 	public static Sprite balloom_right1 = new Sprite(16, 10, 0, SpriteSheet.tiles, 16, 16);
 	public static Sprite balloom_right2 = new Sprite(16, 10, 1, SpriteSheet.tiles, 16, 16);
 	public static Sprite balloom_right3 = new Sprite(16, 10, 2, SpriteSheet.tiles, 16, 16);
+
+	public static Sprite balloom_dead = new Sprite(16, 8, 3, SpriteSheet.tiles, 16, 16);
+	//khiem
+	public static Sprite khiem_left1 = new Sprite(16, 8, 5, SpriteSheet.tiles, 16, 16);
+	public static Sprite khiem_left2 = new Sprite(16, 8, 6, SpriteSheet.tiles, 16, 16);
+	public static Sprite khiem_left3 = new Sprite(16, 8, 7, SpriteSheet.tiles, 16, 16);
 	
-	public static Sprite balloom_dead = new Sprite(16, 9, 3, SpriteSheet.tiles, 16, 16);
+	public static Sprite khiem_right1 = new Sprite(16, 9, 5, SpriteSheet.tiles, 16, 16);
+	public static Sprite khiem_right2 = new Sprite(16, 9, 6, SpriteSheet.tiles, 16, 16);
+	public static Sprite khiem_right3 = new Sprite(16, 9, 7, SpriteSheet.tiles, 16, 16);
+	
+	public static Sprite khiem_dead = new Sprite(16, 8, 8, SpriteSheet.tiles, 16, 16);
 	
 	//ONEAL
 	public static Sprite oneal_left1 = new Sprite(16, 11, 0, SpriteSheet.tiles, 16, 16);

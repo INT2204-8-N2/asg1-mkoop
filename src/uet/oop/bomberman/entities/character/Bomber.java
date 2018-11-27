@@ -6,12 +6,14 @@ import uet.oop.bomberman.entities.Entity;
 import uet.oop.bomberman.entities.Message;
 import uet.oop.bomberman.entities.bomb.Bomb;
 import uet.oop.bomberman.entities.bomb.Flame;
+import uet.oop.bomberman.entities.tile.item.Item;
 import uet.oop.bomberman.graphics.Screen;
 import uet.oop.bomberman.graphics.Sprite;
 import uet.oop.bomberman.input.Keyboard;
 import uet.oop.bomberman.level.Coordinates;
 
 import java.awt.*;
+import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
@@ -19,6 +21,7 @@ public class Bomber extends Character {
 
     private List<Bomb> _bombs;
     protected Keyboard _input;
+    public static List<Item> _upItem = new ArrayList<Item>();
 
     /**
      * nếu giá trị này < 0 thì cho phép đặt đối tượng Bomb tiếp theo,
@@ -178,6 +181,15 @@ public class Bomber extends Character {
         if(canMove(xa, 0)) {
             _x += xa;
         }
+    }
+
+    // an item
+    public void addPowerup(Item p) {
+        if(p.isRemoved()) return;
+
+        _upItem.add(p);
+
+        p.setPower();
     }
 
     @Override

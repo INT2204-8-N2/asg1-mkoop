@@ -4,8 +4,14 @@ import uet.oop.bomberman.entities.tile.Tile;
 import uet.oop.bomberman.graphics.Sprite;
 
 public abstract class Item extends Tile {
-
-	public Item(int x, int y, Sprite sprite) {
+	protected int _level;
+	public Item(int x, int y,int level, Sprite sprite) {
 		super(x, y, sprite);
+		_level = level;
+	}
+	public abstract void setPower();
+	public int getLevel() {
+		return _level;
 	}
 }
+

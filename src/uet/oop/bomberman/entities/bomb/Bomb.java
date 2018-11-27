@@ -6,9 +6,13 @@ import uet.oop.bomberman.entities.AnimatedEntitiy;
 import uet.oop.bomberman.entities.Entity;
 import uet.oop.bomberman.entities.character.Bomber;
 import uet.oop.bomberman.entities.character.Character;
+import uet.oop.bomberman.entities.character.enemy.Balloon;
+import uet.oop.bomberman.entities.character.enemy.khiem;
 import uet.oop.bomberman.graphics.Screen;
 import uet.oop.bomberman.graphics.Sprite;
 import uet.oop.bomberman.level.Coordinates;
+
+
 
 public class Bomb extends AnimatedEntitiy {
 
@@ -84,7 +88,12 @@ public class Bomb extends AnimatedEntitiy {
 
 		Character a = _board.getCharacterAt(_x, _y);
 		if(a != null)  {
-			a.kill();
+
+			if(a instanceof khiem){
+				_board.addCharacter( new Balloon(Coordinates.tileToPixel(_x), Coordinates.tileToPixel(_y) + Game.TILES_SIZE, _board));
+				_board.addCharacter( new Balloon(Coordinates.tileToPixel(_x), Coordinates.tileToPixel(_y) + Game.TILES_SIZE, _board));
+			}
+			else a.kill();
 		}
 
 		_flames = new Flame[4];

@@ -6,10 +6,13 @@ import uet.oop.bomberman.entities.LayeredEntity;
 import uet.oop.bomberman.entities.character.Bomber;
 import uet.oop.bomberman.entities.character.enemy.Balloon;
 import uet.oop.bomberman.entities.character.enemy.Oneal;
+import uet.oop.bomberman.entities.character.enemy.khiem;
 import uet.oop.bomberman.entities.tile.Grass;
 import uet.oop.bomberman.entities.tile.Portal;
 import uet.oop.bomberman.entities.tile.Wall;
 import uet.oop.bomberman.entities.tile.destroyable.Brick;
+import uet.oop.bomberman.entities.tile.item.BombItem;
+import uet.oop.bomberman.entities.tile.item.FlameItem;
 import uet.oop.bomberman.entities.tile.item.SpeedItem;
 import uet.oop.bomberman.exceptions.LoadLevelException;
 import uet.oop.bomberman.graphics.Screen;
@@ -87,7 +90,9 @@ public class FileLevelLoader extends LevelLoader {
 						LayeredEntity layer = new LayeredEntity(x, y,
 								new Grass(x ,y, Sprite.grass),
 								new Brick(x ,y, Sprite.brick));
-
+						if(_board.isItem(x, y, _level) == false) {
+							layer.addBeforeTop(new BombItem(x, y, _level, Sprite.powerup_bombs));
+						}
 
 
 						_board.addEntity(pos, layer);
@@ -96,7 +101,9 @@ public class FileLevelLoader extends LevelLoader {
 						layer = new LayeredEntity(x, y,
 								new Grass(x ,y, Sprite.grass),
 								new Brick(x ,y, Sprite.brick));
-
+						if(_board.isItem(x, y, _level) == false) {
+							layer.addBeforeTop(new SpeedItem(x, y, _level, Sprite.powerup_speed));
+						}
 
 
 						_board.addEntity(pos, layer);
@@ -105,7 +112,9 @@ public class FileLevelLoader extends LevelLoader {
 						layer = new LayeredEntity(x, y,
 								new Grass(x ,y, Sprite.grass),
 								new Brick(x ,y, Sprite.brick));
-
+						if(_board.isItem(x, y, _level) == false) {
+							layer.addBeforeTop(new FlameItem(x, y, _level, Sprite.powerup_flames));
+						}
 
 						_board.addEntity(pos, layer);
 						break;
@@ -117,7 +126,7 @@ public class FileLevelLoader extends LevelLoader {
 					case 'x':
 						_board.addEntity(pos, new LayeredEntity(x, y,
 								new Grass(x ,y, Sprite.grass),
-								new Portal(x ,y, Sprite.portal),
+								new Portal(x ,y, _board, Sprite.portal),
 								new Brick(x ,y, Sprite.brick)) );
 						break;
 					case ' ':
@@ -138,7 +147,10 @@ public class FileLevelLoader extends LevelLoader {
 						_board.addCharacter( new Oneal(Coordinates.tileToPixel(x), Coordinates.tileToPixel(y) + Game.TILES_SIZE, _board));
 						_board.addEntity(pos, new Grass(x, y, Sprite.grass) );
 						break;
-
+					case 'k':
+						_board.addCharacter( new khiem(Coordinates.tileToPixel(x), Coordinates.tileToPixel(y) + Game.TILES_SIZE, _board));
+						_board.addEntity(pos, new Grass(x, y, Sprite.grass) );
+						break;
 					default:
 						_board.addEntity(pos, new Grass(x, y, Sprite.grass) );
 						break;
