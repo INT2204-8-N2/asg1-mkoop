@@ -5,6 +5,7 @@ import uet.oop.bomberman.Game;
 import uet.oop.bomberman.entities.LayeredEntity;
 import uet.oop.bomberman.entities.character.Bomber;
 import uet.oop.bomberman.entities.character.enemy.Balloon;
+import uet.oop.bomberman.entities.character.enemy.Ghost;
 import uet.oop.bomberman.entities.character.enemy.Oneal;
 import uet.oop.bomberman.entities.character.enemy.khiem;
 import uet.oop.bomberman.entities.tile.Grass;
@@ -82,10 +83,11 @@ public class FileLevelLoader extends LevelLoader {
 		for (int x = 0; x < getWidth(); x++) {
 			for (int y = 0; y < getHeight(); y++) {
 				int pos = x + y * getWidth();
-				switch(_lineTiles[y].charAt(x)) { // TODO: minimize this method
+				switch(_lineTiles[y].charAt(x)) {
 					case '#':
 						_board.addEntity(pos, new Wall(x, y, Sprite.wall));
 						break;
+						//Item
 					case 'b':
 						LayeredEntity layer = new LayeredEntity(x, y,
 								new Grass(x ,y, Sprite.grass),
@@ -93,8 +95,6 @@ public class FileLevelLoader extends LevelLoader {
 						if(_board.isItem(x, y, _level) == false) {
 							layer.addBeforeTop(new BombItem(x, y, _level, Sprite.powerup_bombs));
 						}
-
-
 						_board.addEntity(pos, layer);
 						break;
 					case 's':
@@ -150,6 +150,11 @@ public class FileLevelLoader extends LevelLoader {
 					case 'k':
 						_board.addCharacter( new khiem(Coordinates.tileToPixel(x), Coordinates.tileToPixel(y) + Game.TILES_SIZE, _board));
 						_board.addEntity(pos, new Grass(x, y, Sprite.grass) );
+						break;
+					case 'g':
+						_board.addEntity(pos, new Grass(x, y, Sprite.grass) );
+						_board.addCharacter( new Ghost(Coordinates.tileToPixel(x), Coordinates.tileToPixel(y) + Game.TILES_SIZE, _board));
+
 						break;
 					default:
 						_board.addEntity(pos, new Grass(x, y, Sprite.grass) );

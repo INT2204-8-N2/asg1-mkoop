@@ -160,7 +160,7 @@ public class Game extends Canvas {
 	}
 
 	public static void setBomberSpeed(double i){
-		bomberSpeed += 1;
+		bomberSpeed += i;
 	}
 	
 	public static int getBombRate() {

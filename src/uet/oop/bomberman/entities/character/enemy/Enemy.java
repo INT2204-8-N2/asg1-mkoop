@@ -110,10 +110,9 @@ public abstract class Enemy extends Character {
 	@Override
 	public boolean canMove(double x, double y) {
 		// TODO: kiểm tra có đối tượng tại vị trí chuẩn bị di chuyển đến và có thể di chuyển tới đó hay không
-		double xr = _x, yr = _y - 16; //subtract y to get more accurate results
+		double xr = _x, yr = _y - 16;
 
-		//the thing is, subract 15 to 16 (sprite size), so if we add 1 tile we get the next pixel tile with this
-		//we avoid the shaking inside tiles with the help of steps
+
 		if(_direction == 0) { yr += _sprite.getSize() -1 ; xr += _sprite.getSize()/2; }
 		if(_direction == 1) {yr += _sprite.getSize()/2; xr += 1;}
 		if(_direction == 2) { xr += _sprite.getSize()/2; yr += 1;}
@@ -122,7 +121,7 @@ public abstract class Enemy extends Character {
 		int xx = Coordinates.pixelToTile(xr) +(int)x;
 		int yy = Coordinates.pixelToTile(yr) +(int)y;
 
-		Entity a = _board.getEntity(xx, yy, this); //entity of the position we want to go
+		Entity a = _board.getEntity(xx, yy, this); // entity tai vi tri muon di
 
 		return a.collide(this);
 	}
@@ -132,14 +131,6 @@ public abstract class Enemy extends Character {
 		// TODO: xử lý va chạm với Flame
 		// TODO: xử lý va chạm với Bomber
 		if(e instanceof Flame) {
-
-
-
-			if(this instanceof khiem){
-				_board.addCharacter( new Balloon(Coordinates.tileToPixel(this._x), Coordinates.tileToPixel(this._y) + Game.TILES_SIZE, _board));
-				_board.addCharacter( new Balloon(Coordinates.tileToPixel(this._x), Coordinates.tileToPixel(this._y) + Game.TILES_SIZE, _board));
-			}
-			else
 				kill();
 			return false;
 		}

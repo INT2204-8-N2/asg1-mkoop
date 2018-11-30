@@ -9,7 +9,6 @@ public class AILow extends AI {
 		// TODO: cài đặt thuật toán tìm đường đi
 		Random random = new Random();
 		return random.nextInt(4);
-
 	}
 
 }
