@@ -25,11 +25,17 @@ public class khiem extends Enemy {
         switch(_direction) {
             case 0:
             case 1:
-                _sprite = Sprite.movingSprite(Sprite.khiem_right1, Sprite.khiem_right2, Sprite.khiem_right3, _animate, 60);
+                if(_moving)
+                    _sprite = Sprite.movingSprite(Sprite.khiem_right1, Sprite.khiem_right2, Sprite.khiem_right3, _animate, 60);
+                else
+                    _sprite = _sprite.khiem_right1;
                 break;
             case 2:
             case 3:
-                _sprite = Sprite.movingSprite(Sprite.khiem_left1, Sprite.khiem_left2, Sprite.khiem_left3, _animate, 60);
+                if(_moving)
+                    _sprite = Sprite.movingSprite(Sprite.khiem_left1, Sprite.khiem_left2, Sprite.khiem_left3, _animate, 60);
+                else
+                    _sprite = Sprite.khiem_left1;
                 break;
         }
     }

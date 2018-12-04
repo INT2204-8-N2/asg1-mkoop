@@ -140,6 +140,7 @@ public abstract class Enemy extends Character {
 			return false;
 		}
 
+
 		return true;
 	}
 	
