@@ -4,6 +4,7 @@ import uet.oop.bomberman.Board;
 import uet.oop.bomberman.Game;
 import uet.oop.bomberman.entities.Entity;
 import uet.oop.bomberman.entities.Message;
+import uet.oop.bomberman.entities.bomb.Bomb;
 import uet.oop.bomberman.entities.bomb.Flame;
 import uet.oop.bomberman.entities.character.Bomber;
 import uet.oop.bomberman.entities.character.Character;
@@ -67,7 +68,6 @@ public abstract class Enemy extends Character {
 			} else {
 				_sprite = Sprite.movingSprite(Sprite.mob_dead1, Sprite.mob_dead2, Sprite.mob_dead3, _animate, 60);
 			}
-				
 		}
 			
 		screen.renderEntity((int)_x, (int)_y - _sprite.SIZE, this);
@@ -98,11 +98,13 @@ public abstract class Enemy extends Character {
 			_steps = 0;
 			_moving = false;
 		}
+
 	}
 	
 	@Override
 	public void move(double xa, double ya) {
 		if(!_alive) return;
+
 		_y += ya;
 		_x += xa;
 	}
@@ -110,9 +112,10 @@ public abstract class Enemy extends Character {
 	@Override
 	public boolean canMove(double x, double y) {
 		// TODO: kiểm tra có đối tượng tại vị trí chuẩn bị di chuyển đến và có thể di chuyển tới đó hay không
-		double xr = _x, yr = _y - 16;
+		double xr = _x, yr = _y - 16; //subtract y to get more accurate results
 
-
+		//the thing is, subract 15 to 16 (sprite size), so if we add 1 tile we get the next pixel tile with this
+		//we avoid the shaking inside tiles with the help of steps
 		if(_direction == 0) { yr += _sprite.getSize() -1 ; xr += _sprite.getSize()/2; }
 		if(_direction == 1) {yr += _sprite.getSize()/2; xr += 1;}
 		if(_direction == 2) { xr += _sprite.getSize()/2; yr += 1;}
@@ -121,7 +124,7 @@ public abstract class Enemy extends Character {
 		int xx = Coordinates.pixelToTile(xr) +(int)x;
 		int yy = Coordinates.pixelToTile(yr) +(int)y;
 
-		Entity a = _board.getEntity(xx, yy, this); // entity tai vi tri muon di
+		Entity a = _board.getEntity(xx, yy, this); //entity of the position we want to go
 
 		return a.collide(this);
 	}
@@ -130,22 +133,16 @@ public abstract class Enemy extends Character {
 	public boolean collide(Entity e) {
 		// TODO: xử lý va chạm với Flame
 		// TODO: xử lý va chạm với Bomber
+
 		if(e instanceof Flame) {
-				kill();
+			kill();
 			return false;
 		}
 
 		if(e instanceof Bomber) {
-			kill();
-			if (((Bomber) e).getLives() > 1) {}
-			else {
-
-				((Bomber) e).kill();
-
-				return false;
-			}
+			//((Bomber) e).kill();
+			return false;
 		}
-
 
 		return true;
 	}
@@ -171,6 +168,5 @@ public abstract class Enemy extends Character {
 				remove();
 		}
 	}
-	
 	protected abstract void chooseSprite();
 }

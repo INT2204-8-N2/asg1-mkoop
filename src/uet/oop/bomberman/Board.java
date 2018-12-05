@@ -6,14 +6,14 @@ import uet.oop.bomberman.entities.bomb.Bomb;
 import uet.oop.bomberman.entities.bomb.FlameSegment;
 import uet.oop.bomberman.entities.character.Bomber;
 import uet.oop.bomberman.entities.character.Character;
-import uet.oop.bomberman.entities.tile.item.Item;
 import uet.oop.bomberman.exceptions.LoadLevelException;
 import uet.oop.bomberman.graphics.IRender;
 import uet.oop.bomberman.graphics.Screen;
 import uet.oop.bomberman.input.Keyboard;
 import uet.oop.bomberman.level.FileLevelLoader;
 import uet.oop.bomberman.level.LevelLoader;
-import uet.oop.bomberman.entities.tile.item.BombItem;
+import uet.oop.bomberman.level.PlayAudio;
+
 import java.awt.*;
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -27,6 +27,8 @@ public class Board implements IRender {
 	protected Game _game;
 	protected Keyboard _input;
 	protected Screen _screen;
+
+	protected Bomber bomber;
 	
 	public Entity[] _entities;
 	public List<Character> _characters = new ArrayList<>();
@@ -77,21 +79,16 @@ public class Board implements IRender {
 				_entities[x + y * _levelLoader.getWidth()].render(screen);
 			}
 		}
+		
 		renderBombs(screen);
 		renderCharacter(screen);
 		
 	}
-
-
-
-	public void newGame() {
-
-		loadLevel(1);
-	}
-
+	
 	public void nextLevel() {
-		loadLevel(_levelLoader.getLevel() + 1);
-		_levelLoader.setLevel();
+			loadLevel(_levelLoader.getLevel() + 1);
+			_game.changeMusic();
+
 	}
 	
 	public void loadLevel(int level) {
@@ -102,26 +99,13 @@ public class Board implements IRender {
 		_characters.clear();
 		_bombs.clear();
 		_messages.clear();
-		
 		try {
-			_levelLoader = new FileLevelLoader("levels/Level" + level + ".txt", this);
+			_levelLoader = new FileLevelLoader(this, level);
 			_entities = new Entity[_levelLoader.getHeight() * _levelLoader.getWidth()];
-			
 			_levelLoader.createEntities();
 		} catch (LoadLevelException e) {
 			endGame();
 		}
-	}
-	// kiem tra co an dk item k
-	public boolean isItem(int x, int y, int level) {
-		Item p;
-		for (int i = 0; i < Bomber._upItem.size(); i++) {
-			p = Bomber._upItem.get(i);
-			if(p.getX() == x && p.getY() == y && level == p.getLevel())
-				return true;
-		}
-
-		return false;
 	}
 	
 	protected void detectEndGame() {
@@ -132,6 +116,9 @@ public class Board implements IRender {
 	public void endGame() {
 		_screenToShow = 1;
 		_game.resetScreenDelay();
+		_game.getMusic().stop();
+		PlayAudio end = new PlayAudio("/music/gameover.wav");
+		end.play();
 		_game.pause();
 	}
 	
@@ -141,7 +128,6 @@ public class Board implements IRender {
 			if(_characters.get(i) instanceof Bomber == false)
 				++total;
 		}
-		
 		return total == 0;
 	}
 	
@@ -192,20 +178,6 @@ public class Board implements IRender {
 		
 		return null;
 	}
-	// them vao
-    public Character getCharacterAt(double x, double y) {
-        Iterator<Character> itr = _characters.iterator();
-
-        Character cur;
-        while(itr.hasNext()) {
-            cur = itr.next();
-
-            if(cur.getXTile() == x && cur.getYTile() == y)
-                return cur;
-        }
-
-        return null;
-    }
 
 	public Bomber getBomber() {
 		Iterator<Character> itr = _characters.iterator();
@@ -220,7 +192,21 @@ public class Board implements IRender {
 		
 		return null;
 	}
-	
+
+	public Character getCharacterAt(double x, double y) {
+		Iterator<Character> itr = _characters.iterator();
+
+		Character cur;
+		while(itr.hasNext()) {
+			cur = itr.next();
+
+			if(cur.getXTile() == x && cur.getYTile() == y)
+				return cur;
+		}
+
+		return null;
+	}
+
 	public Character getCharacterAtExcluding(int x, int y, Character a) {
 		Iterator<Character> itr = _characters.iterator();
 		
@@ -357,6 +343,10 @@ public class Board implements IRender {
 		return _game;
 	}
 
+	public Board getBoard() {
+		return this;
+	}
+
 	public int getShow() {
 		return _screenToShow;
 	}
@@ -373,6 +363,10 @@ public class Board implements IRender {
 		return _points;
 	}
 
+	public int getLive() {
+		return Bomber.getLive();
+	}
+
 	public void addPoints(int points) {
 		this._points += points;
 	}
@@ -384,5 +378,4 @@ public class Board implements IRender {
 	public int getHeight() {
 		return _levelLoader.getHeight();
 	}
-	
 }

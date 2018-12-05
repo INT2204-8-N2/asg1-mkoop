@@ -3,49 +3,55 @@ package uet.oop.bomberman.entities.character.enemy.ai;
 import uet.oop.bomberman.entities.character.Bomber;
 import uet.oop.bomberman.entities.character.enemy.Enemy;
 
-import java.util.Random;
-
 public class AIMedium extends AI {
-	Bomber _bomber;
+	Bomber _player;
 	Enemy _e;
-	
-	public AIMedium(Bomber bomber, Enemy e) {
-		_bomber = bomber;
+
+	public AIMedium(Bomber player, Enemy e) {
+		_player = player;
 		_e = e;
 	}
 
 	@Override
 	public int calculateDirection() {
-		// TODO: cài đặt thuật toán tìm đường đi
-		if(_bomber == null){
-			Random random = new Random();
+
+		if(_player == null)
 			return random.nextInt(4);
-		}
-		Random random = new Random();
 
-		if(_bomber.getX() > _e.getX() && _bomber.getY() > _e.getY()) {
-			if (random.nextBoolean())
-				return 1;
+		int vertical = random.nextInt(2);
+
+		if(vertical == 1) {
+			int v = calculateRowDirection();
+			if(v != -1)
+				return v;
 			else
-				return 2;
-		}
-		if(_bomber.getX() <= _e.getX()&& _bomber.getY() <= _e.getY()) {
-			if (random.nextBoolean())
-				return 3;
+				return calculateColDirection();
+
+		} else {
+			int h = calculateColDirection();
+
+			if(h != -1)
+				return h;
 			else
-				return 0;
-		}
-		if(_bomber.getX() <= _e.getX() && _bomber.getY() > _e.getY()){
-			if(random.nextBoolean())
-				return 3;
-			else
-				return 2;
+				return calculateRowDirection();
 		}
 
-		if(random.nextBoolean())
-			return 1;
-		else
-			return 0;
 	}
 
+	protected int calculateColDirection() {
+		if(_player.getXTile() < _e.getXTile())
+			return 3;
+		else if(_player.getXTile() > _e.getXTile())
+			return 1;
+
+		return -1;
+	}
+
+	protected int calculateRowDirection() {
+		if(_player.getYTile() < _e.getYTile())
+			return 0;
+		else if(_player.getYTile() > _e.getYTile())
+			return 2;
+		return -1;
+	}
 }

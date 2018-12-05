@@ -9,4 +9,6 @@ public class Wall extends Tile {
 		super(x, y, sprite);
 	}
 
+
+
 }

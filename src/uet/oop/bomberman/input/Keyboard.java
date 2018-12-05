@@ -20,18 +20,20 @@ public class Keyboard implements KeyListener {
 	}
 
 	@Override
-	public void keyTyped(KeyEvent e) {}
+	public void keyTyped(KeyEvent e) {
+		//đặt bom;
+	}
 
 	@Override
 	public void keyPressed(KeyEvent e) {
 		keys[e.getKeyCode()] = true;
-		
+		//sự kiện key được nhấn để di chuyển
 	}
 
 	@Override
 	public void keyReleased(KeyEvent e) {
 		keys[e.getKeyCode()] = false;
-		
+		//sự kiện key được thả ra để kết thúc di chuyển
 	}
 
 }

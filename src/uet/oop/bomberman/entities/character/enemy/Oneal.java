@@ -1,6 +1,5 @@
 package uet.oop.bomberman.entities.character.enemy;
 
-
 import uet.oop.bomberman.Board;
 import uet.oop.bomberman.Game;
 import uet.oop.bomberman.entities.Entity;
@@ -8,19 +7,18 @@ import uet.oop.bomberman.entities.bomb.Flame;
 import uet.oop.bomberman.entities.character.Bomber;
 import uet.oop.bomberman.entities.character.enemy.ai.AILow;
 import uet.oop.bomberman.graphics.Sprite;
-import uet.oop.bomberman.level.Coordinates;
 
 public class Oneal extends Enemy {
-	
+
 	public Oneal(int x, int y, Board board) {
-		super(x, y, board, Sprite.oneal_dead, Game.getBomberSpeed(), 200);
+		super(x, y, board, Sprite.oneal_dead, Game.getBomberSpeed()*1.1, 200);
 		
 		_sprite = Sprite.oneal_left1;
 		
 		_ai = new AILow();
 		_direction  = _ai.calculateDirection();
 	}
-	
+
 	@Override
 	protected void chooseSprite() {
 		switch(_direction) {
@@ -40,23 +38,24 @@ public class Oneal extends Enemy {
 				break;
 		}
 	}
-    @Override
-    public boolean canMove(double x, double y) {
-        // TODO: kiểm tra có đối tượng tại vị trí chuẩn bị di chuyển đến và có thể di chuyển tới đó hay không
-        double xr = _x, yr = _y - 16;
 
+	@Override
+	public boolean collide(Entity e) {
+		// TODO: xử lý va chạm với Flame
+		// TODO: xử lý va chạm với Bomber
 
-        if(_direction == 0) { yr += _sprite.getSize() -1 ; xr += _sprite.getSize()/2; }
-        if(_direction == 1) {yr += _sprite.getSize()/2; xr += 1;}
-        if(_direction == 2) { xr += _sprite.getSize()/2; yr += 1;}
-        if(_direction == 3) { xr += _sprite.getSize() -1; yr += _sprite.getSize()/2;}
+		if(e instanceof Flame) {
+			kill();
+			_board.addCharacter(new Balloon((int) this.getX(), (int)this.getY(), _board));
+			_board.addCharacter(new Balloon((int) this.getX(), (int)this.getY(), _board));
+			return false;
+		}
 
-        int xx = Coordinates.pixelToTile(xr) +(int)x;
-        int yy = Coordinates.pixelToTile(yr) +(int)y;
+		if(e instanceof Bomber) {
+			//((Bomber) e).kill();
+			return false;
+		}
 
-        Entity a = _board.getEntity(xx, yy, this); // entity tai vi tri muon di
-
-        return a.collide(this);
-    }
-
+		return true;
+	}
 }

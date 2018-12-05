@@ -5,6 +5,7 @@ import uet.oop.bomberman.Game;
 import uet.oop.bomberman.entities.Entity;
 import uet.oop.bomberman.entities.bomb.Flame;
 import uet.oop.bomberman.entities.character.Bomber;
+import uet.oop.bomberman.entities.character.enemy.ai.AIMinh;
 import uet.oop.bomberman.entities.tile.Wall;
 import uet.oop.bomberman.entities.character.enemy.ai.AIMedium;
 import uet.oop.bomberman.entities.tile.destroyable.Brick;
@@ -17,7 +18,7 @@ public class Oneal2 extends Enemy {
 
         _sprite = Sprite.balloom_left1;
 
-        _ai = new AIMedium(_board.getBomber(), this);
+        _ai = new AIMinh(_board.getBomber(), this ,board);
         _direction = _ai.calculateDirection();
     }
 
@@ -27,16 +28,16 @@ public class Oneal2 extends Enemy {
             case 0:
             case 1:
                 if(_moving)
-                    _sprite = Sprite.movingSprite(Sprite.oneal_right1, Sprite.oneal_right2, Sprite.oneal_right3, _animate, 60);
+                    _sprite = Sprite.movingSprite(Sprite.Minh_right1, Sprite.Minh_right2, Sprite.Minh_right3, _animate, 60);
                 else
-                    _sprite = Sprite.oneal_left1;
+                    _sprite = Sprite.Minh_left1;
                 break;
             case 2:
             case 3:
                 if(_moving)
-                    _sprite = Sprite.movingSprite(Sprite.oneal_left1, Sprite.oneal_left2, Sprite.oneal_left3, _animate, 60);
+                    _sprite = Sprite.movingSprite(Sprite.Minh_left1, Sprite.Minh_left2, Sprite.Minh_left3, _animate, 60);
                 else
-                    _sprite = Sprite.oneal_left1;
+                    _sprite = Sprite.Minh_left1;
                 break;
         }
     }
@@ -55,7 +56,26 @@ public class Oneal2 extends Enemy {
 
         Entity a = _board.getEntity(xx, yy, this); // entity tai vi tri muon di
 
+        if(a instanceof Wall)
+            return false;
         return a.collide(this);
+    }
+    @Override
+    public boolean collide(Entity e) {
+        // TODO: xử lý va chạm với Flame
+        // TODO: xử lý va chạm với Bomber
+        if(e instanceof Flame) {
+            kill();
+            return false;
+        }
+
+        if(e instanceof Bomber) {
+            ((Bomber) e).kill();
+            return false;
+        }
+        //if(e instanceof Brick)
+
+        return true;
     }
 
 }

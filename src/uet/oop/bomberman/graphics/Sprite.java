@@ -4,7 +4,7 @@ package uet.oop.bomberman.graphics;
  * Lưu trữ thông tin các pixel của 1 sprite (hình ảnh game)
  */
 public class Sprite {
-	
+
 	public final int SIZE;
 	private int _x, _y;
 	public int[] _pixels;
@@ -53,36 +53,16 @@ public class Sprite {
 	| Character
 	|--------------------------------------------------------------------------
 	 */
-	//Ghost
-	public static Sprite ghost_left1 = new Sprite(16, 6, 5, SpriteSheet.tiles, 16, 16);
-	public static Sprite ghost_left2 = new Sprite(16, 6, 6, SpriteSheet.tiles, 16, 16);
-	public static Sprite ghost_left3 = new Sprite(16, 6, 7, SpriteSheet.tiles, 16, 16);
-
-	public static Sprite ghost_right1 = new Sprite(16, 7, 5, SpriteSheet.tiles, 16, 16);
-	public static Sprite ghost_right2 = new Sprite(16, 7, 6, SpriteSheet.tiles, 16, 16);
-	public static Sprite ghost_right3 = new Sprite(16, 7, 7, SpriteSheet.tiles, 16, 16);
-
-	public static Sprite ghost_dead = new Sprite(16, 6, 8, SpriteSheet.tiles, 16, 16);
 	//BALLOM
 	public static Sprite balloom_left1 = new Sprite(16, 9, 0, SpriteSheet.tiles, 16, 16);
 	public static Sprite balloom_left2 = new Sprite(16, 9, 1, SpriteSheet.tiles, 16, 16);
 	public static Sprite balloom_left3 = new Sprite(16, 9, 2, SpriteSheet.tiles, 16, 16);
-
+	
 	public static Sprite balloom_right1 = new Sprite(16, 10, 0, SpriteSheet.tiles, 16, 16);
 	public static Sprite balloom_right2 = new Sprite(16, 10, 1, SpriteSheet.tiles, 16, 16);
 	public static Sprite balloom_right3 = new Sprite(16, 10, 2, SpriteSheet.tiles, 16, 16);
-
-	public static Sprite balloom_dead = new Sprite(16, 8, 3, SpriteSheet.tiles, 16, 16);
-	//khiem
-	public static Sprite khiem_left1 = new Sprite(16, 8, 5, SpriteSheet.tiles, 16, 16);
-	public static Sprite khiem_left2 = new Sprite(16, 8, 6, SpriteSheet.tiles, 16, 16);
-	public static Sprite khiem_left3 = new Sprite(16, 8, 7, SpriteSheet.tiles, 16, 16);
 	
-	public static Sprite khiem_right1 = new Sprite(16, 9, 5, SpriteSheet.tiles, 16, 16);
-	public static Sprite khiem_right2 = new Sprite(16, 9, 6, SpriteSheet.tiles, 16, 16);
-	public static Sprite khiem_right3 = new Sprite(16, 9, 7, SpriteSheet.tiles, 16, 16);
-	
-	public static Sprite khiem_dead = new Sprite(16, 8, 8, SpriteSheet.tiles, 16, 16);
+	public static Sprite balloom_dead = new Sprite(16, 9, 3, SpriteSheet.tiles, 16, 16);
 	
 	//ONEAL
 	public static Sprite oneal_left1 = new Sprite(16, 11, 0, SpriteSheet.tiles, 16, 16);
@@ -127,7 +107,18 @@ public class Sprite {
 	public static Sprite kondoria_right3 = new Sprite(16, 11, 7, SpriteSheet.tiles, 16, 16);
 	
 	public static Sprite kondoria_dead = new Sprite(16, 10, 8, SpriteSheet.tiles, 16, 16);
-	
+
+	//Minh
+	public static Sprite Minh_left1 = new Sprite(16, 12, 5, SpriteSheet.tiles, 16, 16);
+	public static Sprite Minh_left2 = new Sprite(16, 12, 6, SpriteSheet.tiles, 16, 16);
+	public static Sprite Minh_left3 = new Sprite(16, 12, 7, SpriteSheet.tiles, 16, 16);
+
+	public static Sprite Minh_right1 = new Sprite(16, 13, 5, SpriteSheet.tiles, 16, 16);
+	public static Sprite Minh_right2 = new Sprite(16, 13, 6, SpriteSheet.tiles, 16, 16);
+	public static Sprite Minh_right3 = new Sprite(16, 13, 7, SpriteSheet.tiles, 16, 16);
+
+	public static Sprite Minh_dead = new Sprite(16, 12, 8, SpriteSheet.tiles, 16, 16);
+
 	//ALL
 	public static Sprite mob_dead1 = new Sprite(16, 15, 0, SpriteSheet.tiles, 16, 16);
 	public static Sprite mob_dead2 = new Sprite(16, 15, 1, SpriteSheet.tiles, 16, 16);

@@ -27,7 +27,6 @@ public class AIDoll extends AI{
             int kc = Game.getBombRadius();
             difX = _e.getXTile() - _bombs.get(i).getX();
             difY = _e.getYTile() - _bombs.get(i).getY();
-            System.out.println(_e.getXTile() + " " + _bombs.get(i).getX() + " " + difX + " " +kc);
             if (difX <= kc && difX >= 0) return 1;
             else if (difX >= -kc && difX <= 0) return 3;
             else  if (difY <= kc && difY >= 0) return 2;
@@ -64,6 +63,4 @@ public class AIDoll extends AI{
             return 0;
 
     }
-
-
 }

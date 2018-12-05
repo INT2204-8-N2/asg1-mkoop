@@ -2,8 +2,10 @@ package uet.oop.bomberman.entities.bomb;
 
 import uet.oop.bomberman.Board;
 import uet.oop.bomberman.entities.Entity;
-import uet.oop.bomberman.graphics.Screen;
 import uet.oop.bomberman.entities.character.Character;
+import uet.oop.bomberman.graphics.Screen;
+import uet.oop.bomberman.graphics.Sprite;
+
 public class Flame extends Entity {
 
 	protected Board _board;
@@ -27,7 +29,6 @@ public class Flame extends Entity {
 		_direction = direction;
 		_radius = radius;
 		_board = board;
-		_flameSegments = new FlameSegment[calculatePermitedDistance()];
 		createFlameSegments();
 	}
 
@@ -38,16 +39,20 @@ public class Flame extends Entity {
 		/**
 		 * tính toán độ dài Flame, tương ứng với số lượng segment
 		 */
-
+		_flameSegments = new FlameSegment[calculatePermitedDistance()];
 
 		/**
 		 * biến last dùng để đánh dấu cho segment cuối cùng
 		 */
-		boolean last;
+
+		// TODO: tạo các segment dưới đây
+
+		boolean last = false;
+
 		int x = (int)_x;
 		int y = (int)_y;
 		for (int i = 0; i < _flameSegments.length; i++) {
-			last = i == _flameSegments.length -1 ? true : false;
+			last = i == _flameSegments.length - 1 ? true : false;
 
 			switch (_direction) {
 				case 0: y--; break;
@@ -57,8 +62,6 @@ public class Flame extends Entity {
 			}
 			_flameSegments[i] = new FlameSegment(x, y, _direction, last);
 		}
-
-		// TODO: tạo các segment dưới đây
 	}
 
 	/**

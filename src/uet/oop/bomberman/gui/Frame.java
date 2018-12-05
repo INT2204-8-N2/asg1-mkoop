@@ -9,7 +9,7 @@ import java.awt.*;
  * Swing Frame chứa toàn bộ các component
  */
 public class Frame extends JFrame {
-	
+
 	public GamePanel _gamepane;
 	private JPanel _containerpane;
 	private InfoPanel _infopanel;
@@ -33,9 +33,8 @@ public class Frame extends JFrame {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		pack();
 		setLocationRelativeTo(null);
-		setVisible(true);	
-		
-		_game.start();
+		setVisible(true);
+			_game.start();
 	}
 	
 	public void setTime(int time) {
@@ -46,7 +45,7 @@ public class Frame extends JFrame {
 		_infopanel.setPoints(points);
 	}
 
-	public void setLives(int lives){
+	public void setLive(int lives) {
 		_infopanel.setLives(lives);
 	}
 	
