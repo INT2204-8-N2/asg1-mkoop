@@ -136,6 +136,7 @@ public abstract class Enemy extends Character {
 		}
 
 		if(e instanceof Bomber) {
+			kill();
 			((Bomber) e).kill();
 			return false;
 		}

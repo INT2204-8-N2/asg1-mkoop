@@ -21,6 +21,7 @@ import java.util.List;
 public class Bomber extends Character {
 
     private List<Bomb> _bombs;
+    private static int lives;
     protected Keyboard _input;
     public static List<Item> _upItem = new ArrayList<Item>();
 
@@ -35,6 +36,7 @@ public class Bomber extends Character {
         _bombs = _board.getBombs();
         _input = _board.getInput();
         _sprite = Sprite.player_right;
+        setLives(3);
     }
 
     @Override
@@ -53,6 +55,7 @@ public class Bomber extends Character {
         calculateMove();
 
         detectPlaceBomb();
+        setLives(lives);
     }
 
     @Override
@@ -65,6 +68,8 @@ public class Bomber extends Character {
             _sprite = Sprite.player_dead1;
 
         screen.renderEntity((int) _x, (int) _y - _sprite.SIZE, this);
+        setLives(lives);
+
     }
 
     public void calculateXOffset() {
@@ -198,18 +203,27 @@ public class Bomber extends Character {
         // TODO: xử lý va chạm với Flame
         // TODO: xử lý va chạm với Enemy
         if(e instanceof Flame) {
-            kill();
+            if(lives > 1) lives--;
+            else {
+                kill();
+                lives--;
+            }
             return false;
         }
-
         if(e instanceof Enemy) {
-            kill();
+            if(lives > 1) lives--;
+            else {
+                kill();
+                lives--;
+            }
             return false;
         }
 
         return true;
+    }
 
-
+    public int getLives() {
+        return lives;
     }
 
     private void chooseSprite() {
@@ -245,5 +259,11 @@ public class Bomber extends Character {
                 }
                 break;
         }
+    }
+    public void dregreAlive() {
+        lives --;
+    }
+    public static void setLives(int i) {
+        lives = i;
     }
 }

@@ -77,7 +77,6 @@ public class Board implements IRender {
 				_entities[x + y * _levelLoader.getWidth()].render(screen);
 			}
 		}
-		
 		renderBombs(screen);
 		renderCharacter(screen);
 		

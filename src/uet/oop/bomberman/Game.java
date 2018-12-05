@@ -59,6 +59,7 @@ public class Game extends Canvas {
 		
 		_board = new Board(this, _input, screen);
 		addKeyListener(_input);
+		_board.getBomber().getLives();
 	}
 	
 	
@@ -84,6 +85,7 @@ public class Game extends Canvas {
 		
 		g.dispose();
 		bs.show();
+		_board.getBomber().getLives();
 	}
 	
 	private void renderScreen() {
@@ -144,6 +146,7 @@ public class Game extends Canvas {
 			if(System.currentTimeMillis() - timer > 1000) {
 				_frame.setTime(_board.subtractTime());
 				_frame.setPoints(_board.getPoints());
+				_frame.setLives(_board.getBomber().getLives());
 				timer += 1000;
 				_frame.setTitle(TITLE + " | " + updates + " rate, " + frames + " fps");
 				updates = 0;

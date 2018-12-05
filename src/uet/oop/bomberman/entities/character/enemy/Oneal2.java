@@ -72,7 +72,6 @@ public class Oneal2 extends Enemy {
             ((Bomber) e).kill();
             return false;
         }
-        //if(e instanceof Brick)
 
         return true;
     }

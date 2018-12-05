@@ -88,12 +88,14 @@ public class Bomb extends AnimatedEntitiy {
 
 		Character a = _board.getCharacterAt(_x, _y);
 		if(a != null)  {
-
-			if(a instanceof khiem){
-				_board.addCharacter( new Balloon(Coordinates.tileToPixel(_x), Coordinates.tileToPixel(_y) + Game.TILES_SIZE, _board));
-				_board.addCharacter( new Balloon(Coordinates.tileToPixel(_x), Coordinates.tileToPixel(_y) + Game.TILES_SIZE, _board));
+			if(a instanceof Bomber)
+			{
+				if(((Bomber) a).getLives() > 1) ((Bomber) a).dregreAlive();
+				else {
+					((Bomber) a).dregreAlive();
+					a.kill();
+				}
 			}
-			else a.kill();
 		}
 
 		_flames = new Flame[4];
@@ -125,7 +127,7 @@ public class Bomb extends AnimatedEntitiy {
 		if(e instanceof Bomber) {
 			double diffX = e.getX() - Coordinates.tileToPixel(getX());
 			double diffY = e.getY() - Coordinates.tileToPixel(getY());
-
+			System.out.println(e.getX() + " " + Coordinates.tileToPixel(getX()) + " " + getX() + ":" + diffX);
 			if(!(diffX >= -10 && diffX < 16 && diffY >= 1 && diffY <= 28)) {
 				_allowedToPassThru = false;
 			}
@@ -141,5 +143,6 @@ public class Bomb extends AnimatedEntitiy {
 
 		return false;
 	}
+
 
 }
