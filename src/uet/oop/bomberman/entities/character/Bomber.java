@@ -211,7 +211,10 @@ public class Bomber extends Character {
             return false;
         }
         if(e instanceof Enemy) {
-            if(lives > 1) lives--;
+            if(lives > 1) {
+                lives--;
+                ((Enemy) e).kill();
+            }
             else {
                 kill();
                 lives--;
@@ -262,6 +265,9 @@ public class Bomber extends Character {
     }
     public void dregreAlive() {
         lives --;
+    }
+    public void addAlive() {
+        lives ++;
     }
     public static void setLives(int i) {
         lives = i;

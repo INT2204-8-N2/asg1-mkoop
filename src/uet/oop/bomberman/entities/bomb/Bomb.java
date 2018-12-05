@@ -96,6 +96,7 @@ public class Bomb extends AnimatedEntitiy {
 					a.kill();
 				}
 			}
+			a.kill();
 		}
 
 		_flames = new Flame[4];
@@ -127,10 +128,12 @@ public class Bomb extends AnimatedEntitiy {
 		if(e instanceof Bomber) {
 			double diffX = e.getX() - Coordinates.tileToPixel(getX());
 			double diffY = e.getY() - Coordinates.tileToPixel(getY());
+
+
 			System.out.println(e.getX() + " " + Coordinates.tileToPixel(getX()) + " " + getX() + ":" + diffX);
-			if(!(diffX >= -10 && diffX < 16 && diffY >= 1 && diffY <= 28)) {
-				_allowedToPassThru = false;
-			}
+			System.out.println(e.getY() + " " + Coordinates.tileToPixel(getY()) + " " + getY() + ":" + diffY);
+			if(!(diffX > -11 && diffX < 16 && diffY >= -11 && diffY <= 27)) {_allowedToPassThru = false;}
+
 
 			return _allowedToPassThru;
 		}

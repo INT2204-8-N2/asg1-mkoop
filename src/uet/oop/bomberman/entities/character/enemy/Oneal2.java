@@ -55,25 +55,7 @@ public class Oneal2 extends Enemy {
 
         Entity a = _board.getEntity(xx, yy, this); // entity tai vi tri muon di
 
-        if(a instanceof Wall)
-            return false;
         return a.collide(this);
-    }
-    @Override
-    public boolean collide(Entity e) {
-        // TODO: xử lý va chạm với Flame
-        // TODO: xử lý va chạm với Bomber
-        if(e instanceof Flame) {
-            kill();
-            return false;
-        }
-
-        if(e instanceof Bomber) {
-            ((Bomber) e).kill();
-            return false;
-        }
-
-        return true;
     }
 
 }

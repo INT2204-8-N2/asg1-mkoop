@@ -58,20 +58,5 @@ public class Oneal extends Enemy {
 
         return a.collide(this);
     }
-	@Override
-	public boolean collide(Entity e) {
-		// TODO: xử lý va chạm với Flame
-		// TODO: xử lý va chạm với Bomber
-		if(e instanceof Flame) {
-			kill();
-			return false;
-		}
 
-		if(e instanceof Bomber) {
-			((Bomber) e).kill();
-			return false;
-		}
-
-		return true;
-	}
 }
